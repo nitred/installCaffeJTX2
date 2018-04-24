@@ -22,15 +22,17 @@ sudo apt-get install libatlas-base-dev -y
 # Remaining Dependencies
 sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev -y
 sudo apt-get install python-dev python-numpy -y
+sudo apt-get install python3-dev python3-numpy -y
 
 sudo usermod -a -G video $USER
 /bin/echo -e "\e[1;32mCloning Caffe into the home directory\e[0m"
+
 # Place caffe in the home directory
-cd $HOME
 # Git clone Caffe
-git clone https://github.com/BVLC/caffe.git 
-cd caffe 
-cp Makefile.config.example Makefile.config
+git clone https://github.com/BVLC/caffe.git $HOME/caffe
+cp Makefile.config $HOME/caffe/Makefile.config
+cd $HOME/caffe
+# cp Makefile.config.example Makefile.config
 # If cuDNN is found cmake uses it in the makefile
 # Regen the makefile; On 16.04, aarch64 has issues with a static cuda runtime
 cmake -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF
