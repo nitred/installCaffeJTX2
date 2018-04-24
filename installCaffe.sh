@@ -23,13 +23,16 @@ sudo apt-get install libatlas-base-dev -y
 sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev -y
 sudo apt-get install python-dev python-numpy -y
 sudo apt-get install python3-dev python3-numpy -y
+# sudo pip3 install protobuf==3.0.0-alpha-3 scikit-image
 
 sudo usermod -a -G video $USER
 /bin/echo -e "\e[1;32mCloning Caffe into the home directory\e[0m"
 
 # Place caffe in the home directory
 # Git clone Caffe
-git clone https://github.com/BVLC/caffe.git $HOME/caffe
+git clone https://github.com/BVLC/caffe.git $HOME/caffe-bak
+rm -rf $HOME/caffe
+cp -R $HOME/caffe-bak $HOME/caffe
 cp Makefile.config $HOME/caffe/Makefile.config
 cd $HOME/caffe
 # cp Makefile.config.example Makefile.config
@@ -43,6 +46,8 @@ cmake -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF
 make -j6 all
 # Run the tests to make sure everything works
 /bin/echo -e "\e[1;32mRunning Caffe Tests\e[0m"
-make -j6 runtest
+# make -j6 runtest
 # The following is a quick timing test ...
 # tools/caffe time --model=models/bvlc_alexnet/deploy.prototxt --gpu=0
+
+make pycaffe
